@@ -13,8 +13,9 @@ def remove_files(img_dir, label_dir):
         os.remove(f)
 
 
-#Map every NO category to COCO's person (0)
-def remap_labels_no_to_coco(nightowls_labels_path, remapped_labels_path):
+#Remove Nightowls ignore area, and map every other category to person (0)
+#
+def remap_labels_no_to_coco(nightowls_labels_path, remapped_labels_path, remap_ignore_areas=True):
     #fs = os.listdir('/usr/src/datasets/nightowls_val/labels')
     fs = os.listdir(nightowls_labels_path)
     for f in fs:
@@ -25,7 +26,9 @@ def remap_labels_no_to_coco(nightowls_labels_path, remapped_labels_path):
         with open(filename_nightowls, encoding='latin-1') as fx:
             for l in fx:
                 l = l.split()
-                l[0] = '0'
+                if not remap_ignore_areas: 
+                    if l[0] == 3: continue #Remove 'ignore area' labels
+                l[0] == '0'
                 l = ' '.join(l) + '\n'
                 ls += l
         with open(f'{remapped_labels_path}{f}','w' ,encoding='latin-1') as fy:
@@ -47,39 +50,30 @@ def copy_images_to_dataset_dir(src_image_dir, dest_image_dir):
             print(f'{src_image_dir/f} is not a file')
     return
 
-def prepare_remapped_train_set():
-    train_labels = '/usr/src/datasets/nightowls_train1/labels/'
-    train_remapped_labels = '/usr/src/datasets/nightowls_train1_remapped/labels/'
-    train_images = '/usr/src/datasets/nightowls_train1/images/'
-    train_remapped_images = '/usr/src/datasets/nightowls_train1_remapped/images/'
+def remap_dataset(dirs):
+    remove_files(dirs['remapped_labels'], dirs['remapped_images'])
 
-    remove_files(train_remapped_labels, train_remapped_images)
-    #shutil.rmtree(train_remapped_labels)
-    #shutil.rmtree(train_remapped_images)
+    remap_labels_no_to_coco(dirs['labels'], dirs['remapped_labels'])
+    copy_images_to_dataset_dir(Path(dirs['images']), Path(dirs['remapped_images']))
 
-    remap_labels_no_to_coco(train_labels, train_remapped_labels)
-    copy_images_to_dataset_dir(Path(train_images), Path(train_remapped_images))
-    os.system(f'ls {train_remapped_images} | wc -l')
-    os.system(f'ls {train_remapped_labels} | wc -l')
-
-def prepare_remapped_val_set():
-    val_labels = '/usr/src/datasets/nightowls_val1/labels/'
-    val_remapped_labels = '/usr/src/datasets/nightowls_val1_remapped/labels/'
-    val_images =  '/usr/src/datasets/nightowls_val1/images/'
-    val_remapped_images = '/usr/src/datasets/nightowls_val1_remapped/images/'
-    shutil.rmtree
-    remove_files(val_remapped_labels, val_remapped_images)
-
-    remap_labels_no_to_coco(val_labels,val_remapped_labels)
-    copy_images_to_dataset_dir(Path(val_images), Path(val_remapped_images))
-    os.system(f'ls {val_remapped_images} | wc -l')
-    os.system(f'ls {val_remapped_labels} | wc -l')
+    print(f"ls {dirs['remapped_images']} | wc -l")
+    os.system(f"ls {dirs['remapped_labels']} | wc -l")
 
 if __name__ == "__main__":
-    #A good refactor would be prepare_remapped_sets() and pass in args (more clear interface)
-    prepare_remapped_train_set()
-    #480
-    #480
-    prepare_remapped_val_set()
-    #98
-    #98
+    #Remap Nightowls to COCO
+    #To remap a dataset, add an append statement like below. Comment or remove those unwanted.
+
+    datasets_dirs = []
+    datasets_dirs.append(nightowls_train := dict(labels = '/usr/src/datasets/nightowls_training_out/labels/',
+                                                    remapped_labels = '/usr/src/datasets/nightowls_training_out_remapped/labels/',
+                                                    images =  '/usr/src/datasets/nightowls_training_out/images/',
+                                                    remapped_images = '/usr/src/datasets/nightowls_training_out_remapped/images/'
+                                                    ))
+
+    datasets_dirs.append(nightowls_validation := dict(labels = '/usr/src/datasets/nightowls_validation_out/labels/',
+                                                    remapped_labels = '/usr/src/datasets/nightowls_validation_out_remapped/labels/',
+                                                    images =  '/usr/src/datasets/nightowls_validation_out/images/',
+                                                    remapped_images = '/usr/src/datasets/nightowls_validation_out_remapped/images/'
+                                                    ))
+    for dirs in datasets_dirs:
+        remap_dataset(dirs)

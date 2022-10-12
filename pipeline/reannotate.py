@@ -12,9 +12,7 @@ import os
 #root@5dcf6e04dbba:/usr/src/yolov5/misc# ls /usr/src/yolov5/runs/detect/exp8/labels/ | wc -l
 #nightowls combined with coco should really be renamed nightowls annotated with coco
 
-#TO-DO
-#Then abstract the whole file into a larger function and share paths with other large function too!
-def run_preamble():
+def preamble():
     #PATHS (can be shared between functions)
     clear_output_dirs()
     cp_images()
@@ -74,12 +72,12 @@ def print_sanity_checks(combined_dir):
 if __name__ == "__main__":
 
     #Preface ------------------------
-    run_preamble()
+    preamble()
     #----------------------------------
 
     #Training ------------------------
     #The output path of:
-    #cd /usr/src/yolov5;python detect.py --source /usr/src/datasets/nightowls_train1_remapped/images/ --weights yolov5x.pt --save-txt
+    #cd /usr/src/yolov5;python detect.py --source /usr/src/datasets/nightowls_training_out_remapped/images/ --weights yolov5x.pt --save-txt
     nightowls_train_labels = '/usr/src/datasets/nightowls_train1_remapped/labels/' #input
     coco_train_labels = '/usr/src/yolov5/runs/detect/exp12/labels/'
     combined_train_labels = '/usr/src/datasets/nightowls_train1_reannotated_with_coco/labels/' #output
