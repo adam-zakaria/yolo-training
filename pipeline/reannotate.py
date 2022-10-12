@@ -19,15 +19,27 @@ def preamble():
 
 #Make these files into variables
 def clear_output_dirs():
-    os.system('rm -rf /usr/src/datasets/nightowls_val1_reannotated_with_coco/images/*;rm -rf /usr/src/datasets/nightowls_val1_reannotated_with_coco/labels/*')
-    os.system('rm -rf /usr/src/datasets/nightowls_train1_reannotated_with_coco/images/*;rm -rf /usr/src/datasets/nightowls_train1_reannotated_with_coco/labels/*')
+    #This only does images...not sure why
+    #it is images and labels for train and val.
 
-    print('rm -rf /usr/src/datasets/nightowls_val1_reannotated_with_coco/images/*;rm -rf /usr/src/datasets/nightowls_val1_reannotated_with_coco/labels/*')
-    print('rm -rf /usr/src/datasets/nightowls_train1_reannotated_with_coco/images/*;rm -rf /usr/src/datasets/nightowls_train1_reannotated_with_coco/labels/*')
+    #remove_command_train = 'rm -rf '
+    base_path = '/usr/src/datasets'
+    reannotated_val = 'nightowls_val1_reannotated_with_coco'
+    reannotated_val = 'nightowls_val1_reannotated_with_coco'
+    remove_command_val = f'rm -rf {base_path}/{reannotated_val}/images/*; rm -rf ${base_path}/{reannotated_val}/labels/*'
+    remove_command_train = f'rm -rf {base_path}/{reannotated_val}/images/*; rm -rf ${base_path}/{reannotated_val}/labels/*'
+    reannotated_images_nightowls_train = f'rm -rf {base_path}/nightowls_train1_reannotated_with_coco/images/*;rm -rf /usr/src/datasets/nightowls_train1_reannotated_with_coco/labels/*'
+    os.system(remove_command_val)
+    os.system(reannotated_images_nightowls_train)
+
+    print(remove_command_val)
+    print(reannotated_images_nightowls_train)
     #We only work with the labels and don't modify the images, so just pass them through the pipeline untouched
 
 #Make these files into variables
 def cp_images():
+    reannotated_images_nightowls_val = 'rm -rf /usr/src/datasets/nightowls_val1_reannotated_with_coco/images/*;rm -rf /usr/src/datasets/nightowls_val1_reannotated_with_coco/labels/*'
+    reannotated_images_nightowls_train = 'rm -rf /usr/src/datasets/nightowls_train1_reannotated_with_coco/images/*;rm -rf /usr/src/datasets/nightowls_train1_reannotated_with_coco/labels/*'
     print('cp -R /usr/src/datasets/nightowls_train1_remapped/images/* /usr/src/datasets/nightowls_train1_reannotated_with_coco/images/')
     os.system('cp -R /usr/src/datasets/nightowls_train1_remapped/images/* /usr/src/datasets/nightowls_train1_reannotated_with_coco/images/')
 
@@ -72,7 +84,7 @@ def print_sanity_checks(combined_dir):
 if __name__ == "__main__":
 
     #Preface ------------------------
-    preamble()
+    #preamble()
     #----------------------------------
 
     #Training ------------------------
