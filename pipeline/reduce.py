@@ -3,12 +3,14 @@ from pathlib import Path
 import shutil
 def remove_classes(src_dir, dest_dir):
     """Move from 80 coco classes to 6"""
-    classes = [0,1,2,3,5,6] #'person','bicycle','car','motorcycle','bus','truck',
+    classes = ['0','1','2','3','5','6'] #'person','bicycle','car','motorcycle','bus','truck',
     for f in os.listdir(src_dir):
         ls = ""
         with open(os.path.join(src_dir,f), encoding='latin-1') as fx:
             for l in fx:
-                if l.split()[0] in classes:
+                clas = l.split()[0]
+                if clas in classes:
+                    print(clas)
                     ls += l
         with open(os.path.join(dest_dir,f),'w' ,encoding='latin-1') as fy:
             fy.write(f'{ls}')

@@ -22,7 +22,6 @@ def remap_labels_no_to_coco(nightowls_labels_path, remapped_labels_path, remap_i
         filename_nightowls = f'{nightowls_labels_path}{f}'
         ls = "" 
         print(f)
-        print('Nightowls:')
         with open(filename_nightowls, encoding='latin-1') as fx:
             for l in fx:
                 l = l.split()
@@ -61,27 +60,41 @@ def remap_dataset(dirs):
 
 if __name__ == "__main__":
 
-    #CHANGE THESE FOR EACH RUN:
-    train_name = 'n25000t'
-    val_name = 'n5000v'
+    #           ***change these for each run, assumes source/{name} is populated***:
+    dir_names = ['n25000t','n5000v']
+
+    def create_dataset_dirs(dataset_names):
+        datasets_dirs = []
+        for name in dataset_names:
+            src = f'/usr/src/datasets/source/{name}'
+            dest = f'/usr/src/datasets/{name}/remapped'
+            datasets_dirs.append(dict(labels = f'{src}/labels/',
+                                    remapped_labels = f'{dest}/labels/',
+                                    images =  f'{src}/images/',
+                                    remapped_images = f'{dest}/images/'
+                                    ))
+            return datasets_dirs
+
+    for dirs in create_dataset_dirs(dir_names):
+        remap_dataset(dirs)
 
     #Remap Nightowls to COCO
     #To remap a dataset, add an append statement like below. Comment or remove those unwanted.
-    train = '/usr/src/datasets/source/n25000t'
-    train_remapped =  f'/usr/src/datasets/n25000t/remapped/'
-    datasets_dirs = []
-    datasets_dirs.append(nightowls_train := dict(labels = f'{train}/labels/',
-                                                    remapped_labels = f'{train_remapped}/labels/',
-                                                    images =  f'{train}/images/',
-                                                    remapped_images = f'{train_remapped}/images/'
-                                                    ))
-    val = '/usr/src/datasets/source/n5000v'
-    val_remapped =  f'/usr/src/datasets/n5000v/remapped'
-
-    datasets_dirs.append(nightowls_validation := dict(labels = f'{val}/labels/',
-                                                    remapped_labels = f'{val_remapped}/labels/',
-                                                    images =  f'{val}/images/',
-                                                    remapped_images = f'{val_remapped}/images/'
-                                                    ))
-    for dirs in datasets_dirs:
-        remap_dataset(dirs)
+    #train_name = 'n25000t'
+    #val_name = 'n5000v'
+#    train = '/usr/src/datasets/source/n25000t'
+#    train_remapped =  f'/usr/src/datasets/n25000t/remapped/'
+#    datasets_dirs = []
+#    datasets_dirs.append(nightowls_train := dict(labels = f'{train}/labels/',
+#                                                    remapped_labels = f'{train_remapped}/labels/',
+#                                                    images =  f'{train}/images/',
+#                                                    remapped_images = f'{train_remapped}/images/'
+#                                                    ))
+#    val = '/usr/src/datasets/source/n5000v'
+#    val_remapped =  f'/usr/src/datasets/n5000v/remapped'
+#
+#    datasets_dirs.append(nightowls_validation := dict(labels = f'{val}/labels/',
+#                                                    remapped_labels = f'{val_remapped}/labels/',
+#                                                    images =  f'{val}/images/',
+#                                                    remapped_images = f'{val_remapped}/images/'
+#                                                    ))
