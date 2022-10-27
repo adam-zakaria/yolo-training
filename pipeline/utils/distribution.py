@@ -28,8 +28,11 @@ def distribution(label_files: str) -> dict:
         with open(os.path.join(label_files, f)) as f1:
             for l in f1:
                 label = l.split()[0]
-                c.update(label)
+                c.update([label])
     return c 
+"""
+Counter, specifically c.update, must not work how it seems, because 
+"""
 
 def remap(c: Counter) -> dict:
     d = {}

@@ -4,7 +4,9 @@ import shutil
 from pathlib import Path
 import glob
 
+#Images need to be copied to the dir referenced by the yaml file
 
+#For *combined / mixed* datasets
 #Keep the nightowls_combined_with_coco data in place,
 #But create train.txt and val.txt to reference each set
 #Copy the nightowls val set and the coco val set
