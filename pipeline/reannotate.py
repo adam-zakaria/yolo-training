@@ -36,15 +36,20 @@ def clear_output_dirs():
     print(reannotated_images_nightowls_train)
     #We only work with the labels and don't modify the images, so just pass them through the pipeline untouched
 
-#Make these files into variables
-def cp_images():
-    reannotated_images_nightowls_val = 'rm -rf /usr/src/datasets/nightowls_val1_reannotated_with_coco/images/*;rm -rf /usr/src/datasets/nightowls_val1_reannotated_with_coco/labels/*'
-    reannotated_images_nightowls_train = 'rm -rf /usr/src/datasets/nightowls_train1_reannotated_with_coco/images/*;rm -rf /usr/src/datasets/nightowls_train1_reannotated_with_coco/labels/*'
-    print('cp -R /usr/src/datasets/nightowls_train1_remapped/images/* /usr/src/datasets/nightowls_train1_reannotated_with_coco/images/')
-    os.system('cp -R /usr/src/datasets/nightowls_train1_remapped/images/* /usr/src/datasets/nightowls_train1_reannotated_with_coco/images/')
+def cp_all_files(src, dest):
+    print(f'cp -R ${src}/* {dest}/images/')
+    os.system(f'cp -R ${src}/* {dest}/images/')
 
-    os.system('cp -R /usr/src/datasets/nightowls_val1_remapped/images/* /usr/src/datasets/nightowls_val1_reannotated_with_coco/images/')
-    print('cp -R /usr/src/datasets/nightowls_val1_remapped/images/* /usr/src/datasets/nightowls_val1_reannotated_with_coco/images/')
+
+#Make these files into variables
+#def cp_images():
+#    reannotated_images_nightowls_val = 'rm -rf /usr/src/datasets/nightowls_val1_reannotated_with_coco/images/*;rm -rf /usr/src/datasets/nightowls_val1_reannotated_with_coco/labels/*'
+#    reannotated_images_nightowls_train = 'rm -rf /usr/src/datasets/nightowls_train1_reannotated_with_coco/images/*;rm -rf /usr/src/datasets/nightowls_train1_reannotated_with_coco/labels/*'
+#    print('cp -R /usr/src/datasets/nightowls_train1_remapped/images/* /usr/src/datasets/nightowls_train1_reannotated_with_coco/images/')
+#    os.system('cp -R /usr/src/datasets/nightowls_train1_remapped/images/* /usr/src/datasets/nightowls_train1_reannotated_with_coco/images/')
+#
+#    os.system('cp -R /usr/src/datasets/nightowls_val1_remapped/images/* /usr/src/datasets/nightowls_val1_reannotated_with_coco/images/')
+#    print('cp -R /usr/src/datasets/nightowls_val1_remapped/images/* /usr/src/datasets/nightowls_val1_reannotated_with_coco/images/')
 
 #Remove person detection from coco detections (detect.py output)
 def remove_persons_from_labels(labels_file):
