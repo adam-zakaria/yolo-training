@@ -71,7 +71,7 @@ def append_coco_labels_to_nightowls_labels(nightowls_labels, coco_labels, combin
     num_missing_files = 0
     #go through nightowls label files
     for f in os.listdir(nightowls_labels):
-        with open(f'{nightowls_labels}{f}', encoding='latin-1') as fx:
+        with open(os.path.join(nightowls_labels,f), encoding='latin-1') as fx:
             ls = "" 
             #get all the lines for a specific file
             for l in fx:
@@ -85,10 +85,10 @@ def append_coco_labels_to_nightowls_labels(nightowls_labels, coco_labels, combin
             #otherwise, write the coco labels to the combined file, first removing the persons labels
             #then, write the nightowls labels to the combined file
                 remove_persons_from_labels(f'{coco_labels}{f}')
-                with open(f'{coco_labels}{f}', encoding='latin-1') as fy:
-                    with open(f'{combined_labels}{f}','w' ,encoding='latin-1') as fz:
+                with open(os.path.join(coco_labels,f), encoding='latin-1') as fy:
+                    with open(os.path.join(combined_labels,f),'w' ,encoding='latin-1') as fz:
                         fz.write(ls)
-                    with open(f'{combined_labels}{f}','a' ,encoding='latin-1') as fz:
+                    with open(os.path.join(combined_labels,f),'a' ,encoding='latin-1') as fz:
                         for l in fy:
                             fz.write(f'{l}')
     print(f'num_missing_files: {num_missing_files}')
@@ -104,27 +104,47 @@ if __name__ == "__main__":
     #preamble()
     #----------------------------------
 
+    def create_dataset_dirs(dataset_names):
+        datasets_dirs = []
+        ds = '/usr/src/datasets/'
+        for name in dataset_names:
+            nightowls_src = os.path.join(ds,name,'remapped/labels')
+            coco_src = f'/usr/src/yolov5/runs/detect/{name}/labels/' #See above
+            nightowls_dest = os.path.join(ds,name, 'reannotated/labels')
+            datasets_dirs.append([nightowls_src, coco_src, nightowls_dest])
+        return datasets_dirs
+
+    names = ['n25000t']
+    #names = ['n5000v']
+    for dataset_dirs in create_dataset_dirs(names): 
+        print(dataset_dirs)
+        append_coco_labels_to_nightowls_labels(*dataset_dirs)
+
     #Training ------------------------
     #COCO_training_labels is the output path of:
     #cd /usr/src/yolov5;python detect.py --source /usr/src/datasets/nightowls_training_out_remapped/images/ --weights yolov5x.pt --save-txt
-    nightowls_train_labels = '/usr/src/datasets/nightowls_training_out_remapped/labels/' #input
-    coco_train_labels = '/usr/src/yolov5/runs/detect/nightowls_training_out_remapped6/labels/' #See above
-    #output dir
-    combined_train_labels = '/usr/src/datasets/nightowls_training_out_reannotated_with_coco/labels/' #output
+    #name = 'n25000t'
+    #ds = '/usr/src/datasets/'
+    #nightowls_src = os.path.join(ds,name,'remapped/labels')
+    #coco_src = f'/usr/src/yolov5/runs/detect/{name}/labels/' #See above
+    #nightowls_dest = os.path.join(ds,name, 'reannotated/labels')
 
-    append_coco_labels_to_nightowls_labels(nightowls_train_labels, coco_train_labels, combined_train_labels)
+    #append_coco_labels_to_nightowls_labels(nightowls_src, coco_src, nightowls_dest)
 
-    #print_sanity_checks('/usr/src/datasets/nightowls_combined_with_coco_train/')
-    #----------------------------------
 
-    #Validation ------------------------
-    #The output path of:
-    #cd /usr/src/yolov5; python detect.py --source /usr/src/yolov5;/usr/src/datasets/nightowls_val1_remapped/images/ --weights yolov5x.pt --save-txt
-    nightowls_val_labels = '/usr/src/datasets/nightowls_validation_out_remapped/labels/'
-    coco_val_labels = '/usr/src/yolov5/runs/detect/nightowls_validation_out_remapped/labels/' #Nightowls pure val run
-    combined_val_labels = '/usr/src/datasets/nightowls_validation_out_reannotated_with_coco/labels/'
+    ##names = ['n25000t','n5000v']
 
-    append_coco_labels_to_nightowls_labels(nightowls_val_labels, coco_val_labels, combined_val_labels)
+    ##print_sanity_checks('/usr/src/datasets/nightowls_combined_with_coco_train/')
+    ##----------------------------------
+
+    ##Validation ------------------------
+    ##The output path of:
+    ##cd /usr/src/yolov5; python detect.py --source /usr/src/yolov5;/usr/src/datasets/nightowls_val1_remapped/images/ --weights yolov5x.pt --save-txt
+    #nightowls_val_labels = '/usr/src/datasets/nightowls_validation_out_remapped/labels/'
+    #coco_val_labels = '/usr/src/yolov5/runs/detect/nightowls_validation_out_remapped/labels/' #Nightowls pure val run
+    #combined_val_labels = '/usr/src/datasets/nightowls_validation_out_reannotated_with_coco/labels/'
+
+    #append_coco_labels_to_nightowls_labels(nightowls_val_labels, coco_val_labels, combined_val_labels)
 
     #print_sanity_checks('/usr/src/datasets/nightowls_combined_with_coco_val/')
     #----------------------------------

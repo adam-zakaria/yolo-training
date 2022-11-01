@@ -41,8 +41,6 @@ def copy_images(src_image_dir, dest_image_dir):
     """
     fs = os.listdir(src_image_dir)
     for f in fs:
-        #src = str(src_image_dir/f.split('.')[0]) + image_extension
-        #dest = str(dest_image_dir/ f.split('.')[0]) + image_extension
         if os.path.isfile(src_image_dir/f):
             shutil.copyfile(src_image_dir/f, dest_image_dir/f)
         else:
