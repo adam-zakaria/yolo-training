@@ -167,4 +167,4 @@ if __name__ == "__main__":
     names = ['n1000t']
     for dataset_dirs in create_dataset_dirs(names): 
         append_coco_labels_to_nightowls_labels(*dataset_dirs)
-    test('n1000t')
+    #test('n1000t')
