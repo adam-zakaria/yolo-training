@@ -5,6 +5,7 @@ import glob
 import shutil 
 
 def remove_files(img_dir, label_dir):
+    # Remove all files from a folder but do not delete the folder
     files = glob.glob(f'{img_dir}*')
     for f in files:
         os.remove(f)
@@ -12,28 +13,20 @@ def remove_files(img_dir, label_dir):
     for f in files:
         os.remove(f)
 
-
-#Remove Nightowls ignore area, and map every other category to person (0)
-#
-def remap_labels_no_to_coco(nightowls_labels_path, remapped_labels_path, remap_ignore_areas=True):
-    #fs = os.listdir('/usr/src/datasets/nightowls_val/labels')
+def remap_labels_no_to_coco(nightowls_labels_path, remapped_labels_path):
+    # Remove Nightowls ignore area, and map every other category to person (0)
     fs = os.listdir(nightowls_labels_path)
     for f in fs:
         filename_nightowls = f'{nightowls_labels_path}{f}'
         ls = "" 
-        print(f)
         with open(filename_nightowls, encoding='latin-1') as fx:
             for l in fx:
                 l = l.split()
-                if not remap_ignore_areas: 
-                    if l[0] == 3: continue #Remove 'ignore area' labels
-                l[0] == '0'
+                l[0] = '0'
                 l = ' '.join(l) + '\n'
                 ls += l
         with open(f'{remapped_labels_path}{f}','w' ,encoding='latin-1') as fy:
             fy.write(f'{ls}')
-        #Copy all images in nightowls_labels_path to remapped_labels_path
-        #shutil.copy(f'{nightowls_images_path}{f}',f'{remapped_images_path}{f}')
 
 def copy_images(src_image_dir, dest_image_dir):
     """
@@ -53,15 +46,15 @@ def remap_dataset(dirs):
     remap_labels_no_to_coco(dirs['labels'], dirs['remapped_labels'])
     copy_images(Path(dirs['images']), Path(dirs['remapped_images']))
 
-    print(f"ls {dirs['remapped_images']} | wc -l")
-    os.system(f"ls {dirs['remapped_labels']} | wc -l")
-
 if __name__ == "__main__":
 
-    #           ***change these for each run, assumes source/{name} is populated***:
-    dir_names = ['n25000t','n5000v']
+    # change these for each run, assumes source/{name} is populated:
+    # source should be put under the dataset, i.e. n1000t/base/:
+    # supports multiple dataset_names
+    dataset_names = ['n1000t']
 
     def create_dataset_dirs(dataset_names):
+        #Create a set of input and output dirs for each dataset
         datasets_dirs = []
         for name in dataset_names:
             src = f'/usr/src/datasets/source/{name}'
@@ -71,28 +64,33 @@ if __name__ == "__main__":
                                     images =  f'{src}/images/',
                                     remapped_images = f'{dest}/images/'
                                     ))
-            return datasets_dirs
+        for dataset_dirs in datasets_dirs:
+            if not os.path.exists(dataset_dirs['remapped_labels']):
+                os.makedirs(dataset_dirs['remapped_labels'])
+            if not os.path.exists(dataset_dirs['remapped_images']):
+                os.makedirs(dataset_dirs['remapped_images'])
+        return datasets_dirs
 
-    for dirs in create_dataset_dirs(dir_names):
+    def test_dirs(remapped_labels):
+        fs = os.listdir(remapped_labels)
+        for f in fs:
+            remapped_label = f'{remapped_labels}{f}'
+            ls = "" 
+            with open(remapped_label, encoding='latin-1') as fx:
+                for l in fx:
+                    l = l.split()
+                    if l[0] != '0':
+                        print(f'Class {l[0]} found')
+                        print("All classes should map to COCO's person class. Exiting")
+                
+        print("Test passed: all remapped label files only reference class 0, COCO's person class.")
+    
+    def print_num_files_in_dir(dir):
+        print(f"ls {dir} | wc -l")
+        os.system(f"ls {dir} | wc -l")
+
+    for dirs in create_dataset_dirs(dataset_names):
         remap_dataset(dirs)
-
-    #Remap Nightowls to COCO
-    #To remap a dataset, add an append statement like below. Comment or remove those unwanted.
-    #train_name = 'n25000t'
-    #val_name = 'n5000v'
-#    train = '/usr/src/datasets/source/n25000t'
-#    train_remapped =  f'/usr/src/datasets/n25000t/remapped/'
-#    datasets_dirs = []
-#    datasets_dirs.append(nightowls_train := dict(labels = f'{train}/labels/',
-#                                                    remapped_labels = f'{train_remapped}/labels/',
-#                                                    images =  f'{train}/images/',
-#                                                    remapped_images = f'{train_remapped}/images/'
-#                                                    ))
-#    val = '/usr/src/datasets/source/n5000v'
-#    val_remapped =  f'/usr/src/datasets/n5000v/remapped'
-#
-#    datasets_dirs.append(nightowls_validation := dict(labels = f'{val}/labels/',
-#                                                    remapped_labels = f'{val_remapped}/labels/',
-#                                                    images =  f'{val}/images/',
-#                                                    remapped_images = f'{val_remapped}/images/'
-#                                                    ))
+        print_num_files_in_dir(dirs['remapped_labels'])
+        print_num_files_in_dir(dirs['remapped_images'])
+        test_dirs(dirs['remapped_labels'])
