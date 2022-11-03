@@ -35,15 +35,29 @@ def copy_images(src_image_dir, dest_image_dir):
             print(f'{src_image_dir/f} is not a file')
     return
 
+def mkdir(dir):
+    if not os.path.exists(dir):
+        os.makedirs(dir)
 if __name__ == "__main__":
     #coco
-    for name in ['c5000v']:
-        remove_classes(f'/usr/src/datasets/source/{name}/labels', f'/usr/src/datasets/{name}/reduced/labels')
-        #YOLO requires that labels and images are siblings
-        copy_images(f'/usr/src/datasets/source/{name}/images', f'/usr/src/datasets/{name}/reduced/images')
 
+#    for name in ['c5000v']:
+#        remove_classes(f'/usr/src/datasets/source/{name}/labels', f'/usr/src/datasets/{name}/reduced/labels')
+#        #YOLO requires that labels and images are siblings
+#        copy_images(f'/usr/src/datasets/source/{name}/images', f'/usr/src/datasets/{name}/reduced/images')
+#
     #nightowls
-    for name in ['n25000t','n5000v']:
+
+    ds = '/usr/src/datasets/'
+    names = ['n1000t']
+    for name in names:
+        reannotated = os.path.join(ds,name,'reannotated')
+        reannotated_labels = f'{reannotated}/labels'
+        mkdir(reannotated)
+        mkdir(reannotated_labels)
+
+    for name in ['n1000t']:
         remove_classes(f'/usr/src/datasets/{name}/reannotated/labels', f'/usr/src/datasets/{name}/reduced/labels')
         #YOLO requires that labels and images are siblings
+        #need to look into if symlinks are sufficient
         copy_images(f'/usr/src/datasets/source/{name}/images', f'/usr/src/datasets/{name}/reduced/images')

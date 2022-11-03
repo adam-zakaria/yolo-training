@@ -46,49 +46,50 @@ def remap_dataset(dirs):
     remap_labels_no_to_coco(dirs['labels'], dirs['remapped_labels'])
     copy_images(Path(dirs['images']), Path(dirs['remapped_images']))
 
+
+def create_dataset_dirs(dataset_names):
+    #Create a set of input and output dirs for each dataset
+    datasets_dirs = []
+    for name in dataset_names:
+        src = f'/usr/src/datasets/source/{name}'
+        dest = f'/usr/src/datasets/{name}/remapped'
+        datasets_dirs.append(dict(labels = f'{src}/labels/',
+                                remapped_labels = f'{dest}/labels/',
+                                images =  f'{src}/images/',
+                                remapped_images = f'{dest}/images/'
+                                ))
+    for dataset_dirs in datasets_dirs:
+        if not os.path.exists(dataset_dirs['remapped_labels']):
+            os.makedirs(dataset_dirs['remapped_labels'])
+        if not os.path.exists(dataset_dirs['remapped_images']):
+            os.makedirs(dataset_dirs['remapped_images'])
+    return datasets_dirs
+
+def test_dirs(remapped_labels):
+    fs = os.listdir(remapped_labels)
+    for f in fs:
+        remapped_label = f'{remapped_labels}{f}'
+        ls = "" 
+        with open(remapped_label, encoding='latin-1') as fx:
+            for l in fx:
+                l = l.split()
+                if l[0] != '0':
+                    print(f'Class {l[0]} found')
+                    print("All classes should map to COCO's person class. Exiting")
+            
+    print("Test passed: all remapped label files only reference class 0, COCO's person class.")
+
+def print_num_files_in_dir(dir):
+    print(f"ls {dir} | wc -l")
+    os.system(f"ls {dir} | wc -l")
+
+
 if __name__ == "__main__":
 
     # change these for each run, assumes source/{name} is populated:
     # source should be put under the dataset, i.e. n1000t/base/:
     # supports multiple dataset_names
-    dataset_names = ['n1000t']
-
-    def create_dataset_dirs(dataset_names):
-        #Create a set of input and output dirs for each dataset
-        datasets_dirs = []
-        for name in dataset_names:
-            src = f'/usr/src/datasets/source/{name}'
-            dest = f'/usr/src/datasets/{name}/remapped'
-            datasets_dirs.append(dict(labels = f'{src}/labels/',
-                                    remapped_labels = f'{dest}/labels/',
-                                    images =  f'{src}/images/',
-                                    remapped_images = f'{dest}/images/'
-                                    ))
-        for dataset_dirs in datasets_dirs:
-            if not os.path.exists(dataset_dirs['remapped_labels']):
-                os.makedirs(dataset_dirs['remapped_labels'])
-            if not os.path.exists(dataset_dirs['remapped_images']):
-                os.makedirs(dataset_dirs['remapped_images'])
-        return datasets_dirs
-
-    def test_dirs(remapped_labels):
-        fs = os.listdir(remapped_labels)
-        for f in fs:
-            remapped_label = f'{remapped_labels}{f}'
-            ls = "" 
-            with open(remapped_label, encoding='latin-1') as fx:
-                for l in fx:
-                    l = l.split()
-                    if l[0] != '0':
-                        print(f'Class {l[0]} found')
-                        print("All classes should map to COCO's person class. Exiting")
-                
-        print("Test passed: all remapped label files only reference class 0, COCO's person class.")
-    
-    def print_num_files_in_dir(dir):
-        print(f"ls {dir} | wc -l")
-        os.system(f"ls {dir} | wc -l")
-
+    dataset_names = ['n25000t','n5000t']
     for dirs in create_dataset_dirs(dataset_names):
         remap_dataset(dirs)
         print_num_files_in_dir(dirs['remapped_labels'])

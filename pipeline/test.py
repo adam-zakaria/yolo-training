@@ -20,7 +20,7 @@ def test(name):
     print(command)
     os.system(command)
     num_missing_files = 0
-    fs = os.listdir(remapped_src)[:]
+    fs = os.listdir(remapped_src)
     for f in fs:
         if f not in os.listdir(detect_src):
             num_missing_files += 1
