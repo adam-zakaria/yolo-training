@@ -47,6 +47,10 @@ def remap_dataset(dirs):
     copy_images(Path(dirs['images']), Path(dirs['remapped_images']))
 
 
+def mkdir(dir):
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+
 def create_dataset_dirs(dataset_names):
     #Create a set of input and output dirs for each dataset
     datasets_dirs = []
@@ -59,10 +63,8 @@ def create_dataset_dirs(dataset_names):
                                 remapped_images = f'{dest}/images/'
                                 ))
     for dataset_dirs in datasets_dirs:
-        if not os.path.exists(dataset_dirs['remapped_labels']):
-            os.makedirs(dataset_dirs['remapped_labels'])
-        if not os.path.exists(dataset_dirs['remapped_images']):
-            os.makedirs(dataset_dirs['remapped_images'])
+        mkdir(dataset_dirs['remapped_labels'])
+        mkdir(dataset_dirs['remapped_images'])
     return datasets_dirs
 
 def test_dirs(remapped_labels):
@@ -89,7 +91,8 @@ if __name__ == "__main__":
     # change these for each run, assumes source/{name} is populated:
     # source should be put under the dataset, i.e. n1000t/base/:
     # supports multiple dataset_names
-    dataset_names = ['n25000t','n5000t']
+    #dataset_names = ['n25000t','n5000t']
+    dataset_names = ['n100t', 'n100v']
     for dirs in create_dataset_dirs(dataset_names):
         remap_dataset(dirs)
         print_num_files_in_dir(dirs['remapped_labels'])
