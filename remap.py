@@ -55,7 +55,7 @@ def create_dataset_dirs(dataset_names):
     #Create a set of input and output dirs for each dataset
     datasets_dirs = []
     for name in dataset_names:
-        src = f'/usr/src/datasets/source/{name}'
+        src = f'/usr/src/datasets/{name}/base'
         dest = f'/usr/src/datasets/{name}/remapped'
         datasets_dirs.append(dict(labels = f'{src}/labels/',
                                 remapped_labels = f'{dest}/labels/',
