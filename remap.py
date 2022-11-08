@@ -92,7 +92,7 @@ if __name__ == "__main__":
     # source should be put under the dataset, i.e. n1000t/base/:
     # supports multiple dataset_names
     #dataset_names = ['n25000t','n5000t']
-    dataset_names = ['n100t', 'n100v']
+    dataset_names = ['n100t']
     for dirs in create_dataset_dirs(dataset_names):
         remap_dataset(dirs)
         print_num_files_in_dir(dirs['remapped_labels'])
