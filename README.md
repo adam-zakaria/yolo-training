@@ -1,4 +1,21 @@
-# openmpf-personal
+# Nightowls 
+Nightowls paper
+https://www.robots.ox.ac.uk/~vgg/publications/2018/Neumann18b/neumann18b.pdf
+"As a result, the dataset contains 279k fully annotated frames with 42, 273
+pedestrians, where 32k frames contain at least one annotated object and the
+remaining 247k are the background images"
+
+Nightowls training
+
+# COCO
+https://cocodataset.org/#download
+
+class distributions do not seem to be on the website, but they are likely somewhere.
+coco val class distro
+https://blog.roboflow.com/coco-dataset/
+
+https://arxiv.org/pdf/1405.0312.pdf
+
 
 # Some pycocotools notes
 """
