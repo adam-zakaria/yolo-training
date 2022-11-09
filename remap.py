@@ -1,4 +1,5 @@
 import os
+from collections import Counter
 import shutil
 from pathlib import Path
 import glob
@@ -86,15 +87,36 @@ def print_num_files_in_dir(dir):
     os.system(f"ls {dir} | wc -l")
 
 
+def distribution(label_dir: str) -> dict:
+    """
+    read all label files
+    count each label
+    print distribution
+    """
+    c = Counter()
+    for f in os.listdir(label_dir):
+        with open(os.path.join(label_dir, f)) as f1:
+            for l in f1:
+                label = l.split()[0]
+                c.update([label])
+    print(f'class distribution: {c}')
+    return c 
+
 if __name__ == "__main__":
 
     # change these for each run, assumes source/{name} is populated:
     # source should be put under the dataset, i.e. n1000t/base/:
     # supports multiple dataset_names
     #dataset_names = ['n25000t','n5000t']
-    dataset_names = ['n100t']
+    dataset_names = ['n130064t']
+    #produce_dataset('n130064t') #max = 130064
+    #produce_dataset('n100t') #max = 130064
+    #produce_dataset('n51848v') #max = 51848
+    #produce_dataset('c5000v') #max = 5000
+
     for dirs in create_dataset_dirs(dataset_names):
         remap_dataset(dirs)
         print_num_files_in_dir(dirs['remapped_labels'])
         print_num_files_in_dir(dirs['remapped_images'])
         test_dirs(dirs['remapped_labels'])
+        distribution(dirs['remapped_labels'])
