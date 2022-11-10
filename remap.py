@@ -36,7 +36,8 @@ def copy_images(src_image_dir, dest_image_dir):
     fs = os.listdir(src_image_dir)
     for f in fs:
         if os.path.isfile(src_image_dir/f):
-            shutil.copyfile(src_image_dir/f, dest_image_dir/f)
+            #shutil.copyfile(src_image_dir/f, dest_image_dir/f)
+            os.symlink(src_image_dir/f, dest_image_dir/f)
         else:
             print(f'{src_image_dir/f} is not a file')
     return
@@ -107,8 +108,8 @@ if __name__ == "__main__":
     # change these for each run, assumes source/{name} is populated:
     # source should be put under the dataset, i.e. n1000t/base/:
     # supports multiple dataset_names
-    #dataset_names = ['n25000t','n5000t']
-    dataset_names = ['n130064t']
+    dataset_names = ['n51848v','c5000v']
+    #dataset_names = ['n130064t']
     #produce_dataset('n130064t') #max = 130064
     #produce_dataset('n100t') #max = 130064
     #produce_dataset('n51848v') #max = 51848
