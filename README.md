@@ -1,7 +1,4 @@
-# YOLO at night
-
-[<img src="https://github.com/adam-zakaria/yolo-training/blob/main/imgs/yolo-after-dark-logo.png">](YOLO after dark)
-
+[<img src="https://github.com/adam-zakaria/yolo-training/blob/main/imgs/yolo_pipeline.png">]
 
 # Nightowls 
 Nightowls paper
