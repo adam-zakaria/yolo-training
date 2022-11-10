@@ -1,7 +1,7 @@
 # YOLO at night
 
-[<img src="http://www.google.com.au/images/nav_logo7.png">](http://google.com.au/)
-https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnjMKBhQYRjdoi1p1xFbwYV7kqJbQkdzjh6iOr7DSF&s
+[<img src="https://github.com/adam-zakaria/yolo-training/blob/main/imgs/yolo-after-dark-logo.png">](YOLO after dark)
+
 
 # Nightowls 
 Nightowls paper
