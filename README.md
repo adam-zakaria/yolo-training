@@ -50,3 +50,11 @@ There are also detect.py and val.py scripts that are relatively similar.
 
 ## FiftyOne
 I've set up FiftyOne but have not documented it. If there is interest in using it please let me know and I can organize documentation.
+
+## The code
+### Executing a stage of the pipeline
+At the bottom of each file in the pipeline there exist strings that should be populated with the name of the dataset that you wish to apply a specific pipeline stage to. For instance, in base.py simply pass the dataset like so: ```produce_dataset('n100t')```
+
+### Adding a dataset
+To add support for a new dataset, the first step would be to add cases for the dataset in ```dataset_helper()``` in base.py and add files to the specified locations. I have not thought about adding support for new datasets beyond this step.
+
