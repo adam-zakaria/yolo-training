@@ -26,6 +26,9 @@ Enter the container with
 docker exec -it <your-container> bash
 ```
 
+## Clone the pipeline
+```git clone https://github.com/adam-zakaria/yolo-training.git```
+
 ## Apply Seung Jae's dual validation patch
 ```
 git config --global user.email "you@example.com"
