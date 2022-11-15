@@ -21,6 +21,10 @@ I've had trouble limiting the gpu access to a single GPU (I've specifically been
 export CUDA_VISIBLE_DEVICES=1
 ```
 once in the container. 
+Enter the container with
+```
+docker exec -it <your-container> bash
+```
 
 ## Applying Seung Jae's dual validation patch
 ```
