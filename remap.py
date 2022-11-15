@@ -104,10 +104,6 @@ def distribution(label_dir: str) -> dict:
     return c 
 
 if __name__ == "__main__":
-
-    # change these for each run, assumes source/{name} is populated:
-    # source should be put under the dataset, i.e. n1000t/base/:
-    # supports multiple dataset_names
     dataset_names = ['n51848v','c5000v']
     #dataset_names = ['n130064t']
     #produce_dataset('n130064t') #max = 130064

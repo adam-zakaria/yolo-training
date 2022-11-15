@@ -44,12 +44,21 @@ git commit -m "dual val patch"
 ```
 
 ## Training
-This is an example of train command that is run in the background and will not exit if the terminal that executes this command exits. This has been important for me I haven't been able to prevent my machine from sleeping and sometimes trainings would exit prematurely. 
+Trainings are configured by yaml files, which by default exist in /usr/src/app/data. See the default yaml files and yolo documentation for examples on how to create these.
+
+Below is an example of a train command that is run in the background and will not exit if the terminal that executes command exits. This has been important for me because I haven't been able to prevent my machine from sleeping and sometimes trainings exit prematurely. 
 ```
 cd /usr/src/app
 nohup python train.py --batch 80 --device 0 --weights yolov5n.pt --data /u    sr/src/datasets/dataset.yaml --epochs 50 --name n130064t_n51848v_c5000v_remapped &
 ```
-There are also detect.py and val.py scripts that are relatively similar. 
+There are also detect.py and val.py scripts that are relatively similar. Below are sample commands:
+```
+python val.py --task val --data /usr/src/yolov5/data/n25000t.yaml --weights yolov5n.pt --device 1 --verbose --save-txt --save-hybrid --save-conf --save-json  --name yolov5n_n5000v_remapped
+```
+```
+python detect.py --data "" --source /usr/src/datasets/n1000t/remapped/images --weights yolov5x.pt --save-txt --name n1000t
+```
+It is less common to use val.py now that we have dual-validation support.
 
 ## FiftyOne
 I've set up FiftyOne but have not documented it. If there is interest in using it please let me know and I can organize documentation.
@@ -60,4 +69,9 @@ At the bottom of each file in the pipeline there exist strings that should be po
 
 ### Adding a dataset
 To add support for a new dataset, the first step would be to add cases for the dataset in ```dataset_helper()``` in base.py and add files to the specified locations. I have not thought about adding support for new datasets beyond this step.
+
+### Reannotate.py
+Reannotate requires that a detection be run on the Nightowls data like so:
+```python detect.py --data "" --source /usr/src/datasets/n1000t/remapped/images --weights yolov5x.pt --save-txt --name n1000t```
+Notice that yolov5x.pt is used: we want the best annotations possible so we use the largest model.
 

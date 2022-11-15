@@ -1,16 +1,7 @@
 import os
 
-#Reannotate Nightowls with YOLO AKA combine nightowls labels on nightowls with coco labels on nightowls into the same label file:
-#*Assumes a detection has been run and the results are at <some_dir>
-#
-#There may be some amount of nightowls images that do not get a COCO label, because for whatever reason YOLO will not do a detection on those particular images.
-#The following message will be produced in those cases:
-#58c5832ebc2601370015a360.txt not in /usr/src/yolov5/runs/detect/exp8/labels/
-#On one run, for 186 NO Val images there were 6 missing:
-#root@5dcf6e04dbba:/usr/src/yolov5/misc# ls /usr/src/datasets/nightowls_val1_remapped/labels/ | wc -l
-#196
-#root@5dcf6e04dbba:/usr/src/yolov5/misc# ls /usr/src/yolov5/runs/detect/exp8/labels/ | wc -l
-#nightowls combined with coco should really be renamed nightowls annotated with coco
+# Reannotate Nightowls with YOLO: combine nightowls labels on nightowls with coco labels on nightowls into the same label file
+# *Assumes a detection has been run on the Nightowls data and the results are at <some_dir>
 
 def preamble():
     #not called right now
