@@ -34,5 +34,12 @@ git apply dual_val.patch
 git add .
 git commit -m "dual val patch"
 
+## Training
+This is an example of train command that is run in the background and will not exit if the terminal that executes this command exits. This has been important for me I haven't been able to prevent my machine from sleeping and sometimes trainings would exit prematurely. 
+```
+nohup python train.py --batch 80 --device 0 --weights yolov5n.pt --data /u    sr/src/datasets/dataset.yaml --epochs 300 --name n130064t_n51848v_c5000v_remapped &
+```
+There are also detect.py and val.py scripts. 
+
 ## FiftyOne
 I've set up FiftyOne but have not documented it. If there is interest in using it please let me know and I can organize documentation.
