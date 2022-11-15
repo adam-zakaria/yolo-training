@@ -26,7 +26,7 @@ Enter the container with
 docker exec -it <your-container> bash
 ```
 
-## Applying Seung Jae's dual validation patch
+## Apply Seung Jae's dual validation patch
 ```
 git config --global user.email "you@example.com"
 git clone https://github.com/adam-zakaria/sj_yolo.git
