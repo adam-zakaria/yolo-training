@@ -82,3 +82,4 @@ Notice that yolov5x.pt is used: we want the best annotations possible so we use 
 To connect to the container remotely using VSCode bring up the command palette with ctrl+shift+p and type 'Connect to Host'.
 ### Problems
 There is a problem where I am repeatedly prompted for a password despite typing in the correct one. A solution for me was ctrl+shift+p 'Kill VSCode Server on Host'.
+A lot of other problems have occurred that I have not documented. Please pull me in if you are experiencing a stubborn issue and I may be able to help.
