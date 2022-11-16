@@ -78,3 +78,7 @@ Reannotate requires that a detection be run on the Nightowls data like so:
 ```python detect.py --data "" --source /usr/src/datasets/n1000t/remapped/images --weights yolov5x.pt --save-txt --name n1000t```
 Notice that yolov5x.pt is used: we want the best annotations possible so we use the largest model.
 
+## VSCode Remote Connection
+To connect to the container remotely using VSCode bring up the command palette with ctrl+shift+p and type 'Connect to Host'.
+### Problems
+There is a problem where I am repeatedly prompted for a password despite typing in the correct one. A solution for me was ctrl+shift+p 'Kill VSCode Server on Host'.
