@@ -64,7 +64,7 @@ python detect.py --data "" --source /usr/src/datasets/n1000t/remapped/images --w
 It is less common to use val.py now that we have dual-validation support.
 
 ## FiftyOne
-I've set up FiftyOne but have not documented it. If there is interest in using it please let me know and I can organize documentation. Amongst other things files must be organized in the format specified by the FiftyOne documentation.
+I've set up FiftyOne but have not documented it. If there is interest in using it please let me know and I can organize documentation. FiftyOne supports YOLOv5 out of the box, but the files must be organized in the format specified by the FiftyOne documentation, which is not how I setup my files.
 
 ## The code
 ### Executing a stage of the pipeline
