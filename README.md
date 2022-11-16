@@ -52,7 +52,7 @@ Trainings are configured by yaml files, which by default exist in /usr/src/app/d
 Below is an example of a train command that is run in the background and will not exit if the terminal that executes the command exits. This has been important for me because I haven't been able to prevent my machine from sleeping and sometimes trainings exit prematurely. 
 ```
 cd /usr/src/app
-nohup python train.py --batch 80 --device 0 --weights yolov5n.pt --data /u    sr/src/datasets/dataset.yaml --epochs 50 --name n130064t_n51848v_c5000v_remapped &
+nohup python train.py --batch 80 --device 0 --weights yolov5n.pt --data /usr/src/datasets/dataset.yaml --epochs 50 --name n130064t_n51848v_c5000v_remapped &
 ```
 There are also detect.py and val.py scripts that are relatively similar. Below are sample commands:
 ```
@@ -68,7 +68,7 @@ I've set up FiftyOne but have not documented it. If there is interest in using i
 
 ## The code
 ### Executing a stage of the pipeline
-At the bottom of each file in the pipeline there exist strings that should be populated with the name of the dataset that you wish to apply a specific pipeline stage to. For instance, in base.py simply pass the dataset like so: ```produce_dataset('n100t')```
+At the bottom of each file in the pipeline there exist strings that should be populated with the name of the dataset that you wish to apply a specific pipeline stage to. For instance, in base.py simply pass the dataset like so: ```produce_dataset('n100t')``` Datasets must be in the form <dataset_name><number of images><training or validation>, i.e. 'n12400t', 'n242v', 'c2422t', 'c224v', where n and c stand for nightowls and coco.
 
 ### Adding a dataset
 To add support for a new dataset, the first step would be to add cases for the dataset in ```dataset_helper()``` in base.py and add files to the specified locations. I have not thought about adding support for new datasets beyond this step.
