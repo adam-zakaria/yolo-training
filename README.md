@@ -27,7 +27,10 @@ docker exec -it <your-container> bash
 ```
 
 ## Clone the pipeline
-```git clone https://github.com/adam-zakaria/yolo-training.git```
+```
+cd /usr/src/
+git clone https://github.com/adam-zakaria/yolo-training.git
+```
 
 ## Apply Seung Jae's dual validation patch
 ```
