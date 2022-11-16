@@ -47,7 +47,7 @@ git commit -m "dual val patch"
 ```
 
 ## Training
-Trainings are configured by yaml files, which by default exist in /usr/src/app/data. See the default yaml files and yolo documentation for examples on how to create these.
+Trainings are configured by yaml files, which by default exist in /usr/src/app/data. Here is Ultralytics' documentation on training custom data like we are doing: https://github.com/ultralytics/yolov5/wiki/Train-Custom-Data See 1.1 Create dataset.yaml for information on the yaml files. Note: the collapsible menu in section 1 needs to be expanded to reveal section 1.1.
 
 Below is an example of a train command that is run in the background and will not exit if the terminal that executes the command exits. This has been important for me because I haven't been able to prevent my machine from sleeping and sometimes trainings exit prematurely. 
 ```
