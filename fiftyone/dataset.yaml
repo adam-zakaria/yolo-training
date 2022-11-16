@@ -1,6 +1,5 @@
-path: /usr/src/datasets/n130064t # dataset root dir
-train: /usr/src/datasets/n130064t/images
-val: /usr/src/datasets/n51848/images
+train: /usr/src/datasets/n130064t_fiftyone/images/train/
+val: /usr/src/datasets/n51848_fiftyone/images/train/
 #train: train2017.txt  # train images (relative to 'path') 118287 images
 #val: val2017.txt  # val images (relative to 'path') 5000 images
 #test: test-dev2017.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
