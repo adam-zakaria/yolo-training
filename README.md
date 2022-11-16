@@ -46,7 +46,7 @@ git commit -m "dual val patch"
 ## Training
 Trainings are configured by yaml files, which by default exist in /usr/src/app/data. See the default yaml files and yolo documentation for examples on how to create these.
 
-Below is an example of a train command that is run in the background and will not exit if the terminal that executes command exits. This has been important for me because I haven't been able to prevent my machine from sleeping and sometimes trainings exit prematurely. 
+Below is an example of a train command that is run in the background and will not exit if the terminal that executes the command exits. This has been important for me because I haven't been able to prevent my machine from sleeping and sometimes trainings exit prematurely. 
 ```
 cd /usr/src/app
 nohup python train.py --batch 80 --device 0 --weights yolov5n.pt --data /u    sr/src/datasets/dataset.yaml --epochs 50 --name n130064t_n51848v_c5000v_remapped &
