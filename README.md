@@ -12,9 +12,9 @@ I slightly augment the command from https://github.com/ultralytics/yolov5/wiki/D
 ```
 sudo docker run --ipc=host -it --gpus all ultralytics/yolov5:latest
 ```
-to enable multiple containers to share the datasets folder on the host. I also add support for exposing port 5151 in the container on the host to use FiftyOne remotely. Since I already use port 5151 for mapping, it is already allocated on Purple and you must select another port
+to enable multiple containers to share the datasets folder on the host, to expose a port in the container on Purple (to enable FiftyOne remote use) and to add a name to the container. Fill in the information in the angle brackets before executing the command.
 ```
-docker run --ipc=host -dit -v /home/mxu/Downloads/yolo_datasets:/usr/src/raw_datasets -p <host_port>:<container_port> --gpus all ultralytics/yolov5:latest
+docker run --name <container_name> --ipc=host -dit -v /home/mxu/Downloads/yolo_datasets:/usr/src/raw_datasets -p <host_port>:<container_port> --gpus all ultralytics/yolov5:latest
 ```
 I've had trouble limiting the gpu access to a single GPU (I've specifically been instructed to use GPU 1) during docker run, so instead run 
 ```
