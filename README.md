@@ -83,8 +83,10 @@ ln -s /usr/src/datasets/n130064t/base/images/ /usr/src/datasets/n130064t_fiftyon
 ln -s /usr/src/datasets/n130064t/base/labels/ /usr/src/datasets/n130064t_fiftyone/labels/train
 cp /usr/src/yolo-training/fiftyone/dataset.yaml /usr/src/datasets/n130064t_fiftyone/
 ```
-Load the dataset in FiftyOne by executing the first cell in /usr/src/yolo-training/fiftyone/yolo.ipynb
+Load the dataset in FiftyOne by executing the first cell in /usr/src/yolo-training/fiftyone/yolo.ipynb The code may try to load an existing dataset, so comment that code and uncomment the dataset creation code if that is the case.
 
+## Examining Individual Samples
+`get_coco_annotation(filename, annotation_file):` in `examine_image_and_bbox.py` can be used to examine the data and `dataset.match(F("filepath") == "/usr/src/datasets/n130064t/base/images/58c583aebc2601370016bfe5.png")`can be used to view the sample in FiftyOne (with additional steps I haven't done yet).
 
 ## The code
 ### Executing a stage of the pipeline
