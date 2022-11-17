@@ -68,6 +68,10 @@ python val.py --task val --data /usr/src/yolov5/data/n25000t.yaml --weights yolo
 python detect.py --data "" --source /usr/src/datasets/n1000t/remapped/images --weights yolov5x.pt --save-txt --name n1000t
 ```
 It is less common to use val.py now that we have dual-validation support.
+## Training Problems
+In Nightowls, some images have labels that exceed the frame. For these labels, YOLO prints an error message:
+```train: WARNING ⚠️ /usr/src/datasets/n130064t/base/images/58c583aebc2601370016bfe5.png: ignoring corrupt image/label: non-normalized or out of bounds coordinates [     1.0596      1.0005      1.034```
+`utils/examine_images_and_bbox.py` investigates this issue and confirms there is not a problem with a pipeline and the original bboxes are indeed out of bounds. This file also reveals that for a given image, several labels may be valid, with one being invalid. In that case, it is not clear if the entire image label pair is thrown out. We may want to simply remove the bad label during the pipeline.
 
 ## FiftyOne
 FiftyOne supports YOLOv5 out of the box, but the files must be organized in the format specified by the FiftyOne documentation, which is not how I setup my files (which I think more closely aligns with the current YOLOv5 docs, but is also sensible for mixing datasets). Eventually, it could be nice to reconcile the two organization formats, perhaps if FiftyOne proves an indispensable tool. Here is the FiftyOne documentation: https://voxel51.com/docs/fiftyone/user_guide/export_datasets.html#yolov5dataset-export
