@@ -102,5 +102,5 @@ There is a problem where I am repeatedly prompted for a password despite typing 
 A lot of other problems have occurred that I have not documented. Please pull me in if you are experiencing a stubborn issue and I may be able to help.
   
 ## Additional Notes
-It may make sense to fork the original repo with our changes and / or make a docker file to capture this process.
+It may make sense to fork the original repo with our changes and / or make a docker file to capture this process. Changes from Ultralytics have broke my workflow and forking would avoid that.
   
