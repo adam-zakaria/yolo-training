@@ -19,6 +19,7 @@ docker run --name <container_name> --ipc=host -dit -v /home/mxu/Downloads/yolo_d
 I've had trouble limiting the gpu access to a single GPU (I've specifically been instructed to use GPU 1) during docker run, so instead run 
 ```
 echo export CUDA_VISIBLE_DEVICES=1 >> ~/.bashrc
+. ~/.bashrc
 ```
 once in the container. 
 Enter the container with
