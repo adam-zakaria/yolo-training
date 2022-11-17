@@ -104,12 +104,7 @@ def distribution(label_dir: str) -> dict:
     return c 
 
 if __name__ == "__main__":
-    dataset_names = ['n51848v','c5000v']
-    #dataset_names = ['n130064t']
-    #produce_dataset('n130064t') #max = 130064
-    #produce_dataset('n100t') #max = 130064
-    #produce_dataset('n51848v') #max = 51848
-    #produce_dataset('c5000v') #max = 5000
+    dataset_names = ['n130064t','n51848v']
 
     for dirs in create_dataset_dirs(dataset_names):
         remap_dataset(dirs)
