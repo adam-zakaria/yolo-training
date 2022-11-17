@@ -2,6 +2,7 @@
 #train: WARNING ⚠️ /usr/src/datasets/n130064t/base/images/58c583aebc2601370016bfdc.png: ignoring corrupt image/label: non-normalized or out of bounds coordinates [     1.0005      1.0342
 #This file was created to confirm that the original bbox is out of the frame and there is no problem with the pipeline.
 #Experiments should be run to decide if we should keep the images and simply remove the out of bounds annotations. Intuition says keep the images and remove the bad annotations because there are more good bboxes on the images than bad.
+#It's not clear if just single label is being ignored or the entire image / label pair
 
 import json
 
