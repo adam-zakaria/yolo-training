@@ -100,7 +100,10 @@ To connect to the container remotely using VSCode bring up the command palette w
 ### Problems
 There is a problem where I am repeatedly prompted for a password despite typing in the correct one. A solution for me was ctrl+shift+p 'Kill VSCode Server on Host'.
 A lot of other problems have occurred that I have not documented. Please pull me in if you are experiencing a stubborn issue and I may be able to help.
-  
+ 
+## General Troubleshooting
+If you start seeing weird errors out of the blue the first things I would do are check the VPN connection and restart the VSCode instance. If you are working in a notebook sometimes restarting the notebook is helpful.
+ 
 ## Additional Notes
 It may make sense to fork the original repo with our changes and / or make a docker file to capture this process. Changes from Ultralytics have broke my workflow and forking would avoid that.
   
