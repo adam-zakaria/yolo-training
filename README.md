@@ -6,7 +6,7 @@
 
 # Setup
 
-## Container
+## Container Setup
 I slightly augment the command from https://github.com/ultralytics/yolov5/wiki/Docker-Quickstart
 ```
 sudo docker run --ipc=host -it --gpus all ultralytics/yolov5:latest
