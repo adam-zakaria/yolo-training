@@ -49,12 +49,18 @@ git commit -m "dual val patch"
 ## Training
 Trainings are configured by yaml files, which by default exist in /usr/src/app/data. Here is Ultralytics' documentation on training custom data like we are doing: https://github.com/ultralytics/yolov5/wiki/Train-Custom-Data See 1.1 Create dataset.yaml for information on the yaml files. Note: the collapsible menu in section 1 needs to be expanded to reveal section 1.1.
 
+Copy a yaml file from this repo to where the YOLOv5 yaml files exists:
+```
+cp /usr/src/yolo-training/n1300064t_n51848v_c5000v_remapped.yaml /usr/src/app/data/n130064t_n51848v_c5000v_remapped.yaml
+```
+Run `remap.py` and `/usr/src/datasets/n51848v/remapped` and `/usr/src/datasets/n130064t/remapped` will be created.
+
 Below is an example of a train command that is run in the background and will not exit if the terminal that executes the command exits. This has been important for me because I haven't been able to prevent my machine from sleeping and sometimes trainings exit prematurely. 
 ```
 cd /usr/src/app
-nohup python train.py --batch 80 --device 0 --weights yolov5n.pt --data /usr/src/datasets/dataset.yaml --epochs 50 --name n130064t_n51848v_c5000v_remapped &
+nohup  python train.py --batch 80 --device 0 --weights yolov5n.pt --data /usr/src/app/data/n1300064t_n51848v_c5000v_remapped.yaml --epochs 50 --name n130064t_n51848v_c5000v_remapped &
 ```
-There are also detect.py and val.py scripts that are relatively similar. Below are sample commands:
+There are also `detect.py` and `val.py` scripts that are relatively similar. Below are sample commands:
 ```
 python val.py --task val --data /usr/src/yolov5/data/n25000t.yaml --weights yolov5n.pt --device 1 --verbose --save-txt --save-hybrid --save-conf --save-json  --name yolov5n_n5000v_remapped
 ```
@@ -81,11 +87,12 @@ Load the dataset in FiftyOne by executing the first cell in /usr/src/yolo-traini
 At the bottom of each file in the pipeline there exist strings that should be populated with the name of the dataset that you wish to apply a specific pipeline stage to. For instance, in base.py simply pass the dataset like so: ```produce_dataset('n100t')``` Datasets must be in the form <dataset_name><number of images><training or validation>, i.e. 'n12400t', 'n242v', 'c2422t', 'c224v', where n and c stand for nightowls and coco.
 
 ### Adding a dataset
-To add support for a new dataset, the first step would be to add cases for the dataset in ```dataset_helper()``` in base.py and add files to the specified locations. I have not thought about adding support for new datasets beyond this step.
+To add support for a new dataset, the first step would be to add cases for the dataset in ```dataset_helper()``` in `base.py` and add files to the specified locations. I have not thought about adding support for new datasets beyond this step.
 
 ### Reannotate.py
 Reannotate requires that a detection be run on the Nightowls data like so:
 ```python detect.py --data "" --source /usr/src/datasets/n1000t/remapped/images --weights yolov5x.pt --save-txt --name n1000t```
+ 
 Notice that yolov5x.pt is used: we want the best annotations possible so we use the largest model.
 
 ## VSCode Remote Connection
@@ -93,3 +100,7 @@ To connect to the container remotely using VSCode bring up the command palette w
 ### Problems
 There is a problem where I am repeatedly prompted for a password despite typing in the correct one. A solution for me was ctrl+shift+p 'Kill VSCode Server on Host'.
 A lot of other problems have occurred that I have not documented. Please pull me in if you are experiencing a stubborn issue and I may be able to help.
+  
+## Additional Notes
+It may make sense to fork the original repo with our changes and / or make a docker file to capture this process.
+  
