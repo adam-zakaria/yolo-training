@@ -5,9 +5,8 @@
 <img src="https://github.com/adam-zakaria/yolo-training/blob/main/imgs/yolo_training_architecture.png">
 
 # Setup
-These instructions are not thoroughly tested and will need to be troubleshooted - use them as a guideline :)
 
-## Container setup
+## Container Setup
 I slightly augment the command from https://github.com/ultralytics/yolov5/wiki/Docker-Quickstart
 ```
 sudo docker run --ipc=host -it --gpus all ultralytics/yolov5:latest
@@ -18,7 +17,8 @@ docker run --name <container_name> --ipc=host -dit -v /home/mxu/Downloads/yolo_d
 ```
 I've had trouble limiting the gpu access to a single GPU (I've specifically been instructed to use GPU 1) during docker run, so instead run 
 ```
-export CUDA_VISIBLE_DEVICES=1
+echo export CUDA_VISIBLE_DEVICES=1 >> ~/.bashrc
+. ~/.bashrc
 ```
 once in the container. 
 Enter the container with
@@ -64,7 +64,17 @@ python detect.py --data "" --source /usr/src/datasets/n1000t/remapped/images --w
 It is less common to use val.py now that we have dual-validation support.
 
 ## FiftyOne
-I've set up FiftyOne but have not documented it. If there is interest in using it please let me know and I can organize documentation.
+FiftyOne supports YOLOv5 out of the box, but the files must be organized in the format specified by the FiftyOne documentation, which is not how I setup my files (which I think more closely aligns with the current YOLOv5 docs, but is also sensible for mixing datasets). Eventually, it could be nice to reconcile the two organization formats, perhaps if FiftyOne proves an indispensable tool. Here is the FiftyOne documentation: https://voxel51.com/docs/fiftyone/user_guide/export_datasets.html#yolov5dataset-export
+Create a dataset like n130064t then execute the commands below to setup FiftyOne:
+```
+python -m pip install fiftyone
+mkdir -p /usr/src/datasets/n130064t_fiftyone/{images,labels}
+ln -s /usr/src/datasets/n130064t/base/images/ /usr/src/datasets/n130064t_fiftyone/images/train
+ln -s /usr/src/datasets/n130064t/base/labels/ /usr/src/datasets/n130064t_fiftyone/labels/train
+cp /usr/src/yolo-training/fiftyone/dataset.yaml /usr/src/datasets/n130064t_fiftyone/
+```
+Load the dataset in FiftyOne by executing the first cell in /usr/src/yolo-training/fiftyone/yolo.ipynb
+
 
 ## The code
 ### Executing a stage of the pipeline
