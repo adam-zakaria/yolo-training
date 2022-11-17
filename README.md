@@ -5,9 +5,8 @@
 <img src="https://github.com/adam-zakaria/yolo-training/blob/main/imgs/yolo_training_architecture.png">
 
 # Setup
-These instructions are not thoroughly tested and will need to be troubleshooted - use them as a guideline :)
 
-## Container setup
+## Container
 I slightly augment the command from https://github.com/ultralytics/yolov5/wiki/Docker-Quickstart
 ```
 sudo docker run --ipc=host -it --gpus all ultralytics/yolov5:latest
