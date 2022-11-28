@@ -85,6 +85,8 @@ cp /usr/src/yolo-training/fiftyone/dataset.yaml /usr/src/datasets/n130064t_fifty
 ```
 Load the dataset in FiftyOne by executing the first cell in /usr/src/yolo-training/fiftyone/yolo.ipynb The code may try to load an existing dataset, so comment that code and uncomment the dataset creation code if that is the case.
 
+When launch_app is called, VSCode will ask if the user wants to open browser. I do so to use FiftyOne. However, if I close the tab, then try to navigate back to the page, FiftyOne does not load. In this instance I restart the container and call launch_app again - I haven't been able to get anything simpler or less time consuming to work.
+
 ## Examining Individual Samples
 `get_coco_annotation(filename, annotation_file):` in `examine_image_and_bbox.py` can be used to examine the data and `dataset.match(F("filepath") == "/usr/src/datasets/n130064t/base/images/58c583aebc2601370016bfe5.png")`can be used to view the sample in FiftyOne (with additional steps I haven't done yet).
 
